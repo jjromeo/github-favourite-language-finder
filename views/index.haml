@@ -1,0 +1,13 @@
+%html
+  %head
+    %title Github Language guesser
+    %script{src: "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"}
+  %body{"ng-app" => "githubsearch" }
+    %h1 Github Favourite language checker
+    .search
+      %input{"ng-model" => "query", placeholder: "search", "ng-keyup"=> "$event.keycode == 13 && executeSearch()"}
+      .repo{"ng-repeat" => "repo in repos", "ng-click" => "openRepo(repo.full_name)"}
+        %p.full-name {{ repo.full_name }}
+        %p.description {{ repo.description }}
+
+
