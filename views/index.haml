@@ -13,4 +13,6 @@
         .repos{"ng-repeat" => "repo in repos"}
           %p {{ repo.full_name }}
 
+      .languages{"ng-repeat" => "object in language_objects"}
+        %p {{object}}
 

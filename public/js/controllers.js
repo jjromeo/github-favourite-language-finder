@@ -8,12 +8,12 @@ app.controller('SearchController', ['$scope', 'Github', function SearchControlle
                $scope.user = data;
                Github.getUrl(data.repos_url, function(error, data) {
                    $scope.repos = data;
-                   for (var i = 0; i < data.length; i++) {
-                       var languages_url = data[i].languages_url
+                   $scope.repos.forEach(function(object, index) {
+                       var languages_url = object.languages_url
                        Github.getUrl(languages_url, function(error, data) {
-                           $scope.language_objects.push(data)
-                       })
-                   }
+                           $scope.language_objects.push(data);
+                       });
+                   });
                });
            }
        });
