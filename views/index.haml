@@ -3,16 +3,8 @@
     %title Github Language guesser
     %link{rel: "stylesheet", href: "css/style.css", type: "text/css"}
     %script{src: "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"}
-    %script{src: "js/controllers.js"}
-  %body{"ng-app" => "githubsearch" }
+  %body
     %h1 Github Favourite language checker
-    #search{"ng-controller" => "SearchController as searchCtrl"}
-      %input{"ng-model" => "query", placeholder: "search", "ng-keyup"=> "$event.keyCode == 13 && executeSearch()"}
-      .repo
-        %p.full-name {{ user.repos_url }}
-        .repos{"ng-repeat" => "repo in repos"}
-          %p {{ repo.full_name }}
-
-      .languages{"ng-repeat" => "object in language_objects"}
-        %p {{object}}
-
+    #search
+      %form{action:"/languages", method:"post"}
+        %input{type:"text", name: 'username',placeholder: "Github Username"}
