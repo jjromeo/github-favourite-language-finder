@@ -20,7 +20,16 @@ describe 'github_connect' do
 
     it 'can create an array of hashes of the languages a user uses' do 
         VCR.use_cassette('languages') do 
-            expect(look_up_languages("jjromeo").class).to eq Array
+            languages_array = look_up_languages("jjromeo")
+            expect(languages_array.class).to eq Array
+            expect(languages_array[0].keys.include?("Ruby")).to eq true
+        end
+    end
+
+    it 'can guess the favourite language of a user' do 
+        VCR.use_cassette('guess') do 
+            languages_array = look_up_languages("jjromeo")
+            expect(guess_favourite(languages_array)).to eq("Ruby")
         end
     end
 

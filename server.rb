@@ -11,7 +11,8 @@ end
 
 post '/languages' do 
     username = params["username"]
-    look_up_languages(username)
+    languages_array = look_up_languages(username)
+    guess_favourite(languages_array)
     redirect to '/'
 end 
 
@@ -36,5 +37,12 @@ def look_up_languages(username)
     user_json = https_get_request("https://api.github.com/users/#{username}")
     user_repos = https_get_request(user_json["repos_url"])
     get_languages(user_repos)
+end
+
+def guess_favourite(languages_array)
+    language_totals = languages_array.inject({}) do |accu, hash| 
+        accu.merge!(hash) {|key, oldval, newval| newval + oldval }
+    end
+    language_totals.max_by {|key, value| value }[0]
 end
 
