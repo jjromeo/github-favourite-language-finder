@@ -10,10 +10,10 @@ get '/' do
 end
 
 post '/languages' do 
-    username = params["username"]
-    languages_array = look_up_languages(username)
-    guess_favourite(languages_array)
-    redirect to '/'
+    @user = params["username"]
+    @favourite_language = guess(@user)
+    puts @favourite_language.inspect
+    haml :results
 end 
 
 def https_get_request(url)
@@ -44,5 +44,10 @@ def guess_favourite(languages_array)
         accu.merge!(hash) {|key, oldval, newval| newval + oldval }
     end
     language_totals.max_by {|key, value| value }[0]
+end
+
+def guess(username)
+    languages_array = look_up_languages(username)
+    guess_favourite(languages_array)
 end
 
