@@ -28,7 +28,7 @@ end
 def get_languages(user_repos)
     languages_array = Array.new
     user_repos.each do |repo|
-        languages_array << repo["language"]
+        languages_array << repo["language"] unless repo["language"] == nil
     end
     languages_array
 end
@@ -45,6 +45,7 @@ end
 
 def guess(username)
     languages_array = look_up_languages(username)
+    puts languages_array.inspect
     guess_favourite(languages_array)
 end
 
