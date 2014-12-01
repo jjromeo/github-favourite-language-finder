@@ -22,7 +22,7 @@ describe 'github_connect' do
         VCR.use_cassette('languages') do 
             languages_array = look_up_languages("jjromeo")
             expect(languages_array.class).to eq Array
-            expect(languages_array[0].keys.include?("Ruby")).to eq true
+            expect(languages_array.include?("Ruby")).to eq true
         end
     end
 

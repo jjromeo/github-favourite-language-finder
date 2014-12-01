@@ -28,7 +28,7 @@ end
 def get_languages(user_repos)
     languages_array = Array.new
     user_repos.each do |repo|
-        languages_array << https_get_request(repo["languages_url"])
+        languages_array << repo["language"]
     end
     languages_array
 end
@@ -40,10 +40,7 @@ def look_up_languages(username)
 end
 
 def guess_favourite(languages_array)
-    language_totals = languages_array.inject({}) do |accu, hash| 
-        accu.merge!(hash) {|key, oldval, newval| newval + oldval }
-    end
-    language_totals.max_by {|key, value| value }[0]
+    languages_array.max_by {|language| languages_array.count(language)}
 end
 
 def guess(username)
