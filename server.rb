@@ -11,9 +11,13 @@ end
 
 post '/languages' do 
     @user = params["username"]
+    begin
     @favourite_language = guess(@user)
-    puts @favourite_language.inspect
-    haml :results
+    rescue URI::InvalidURIError => e
+        haml :invalid
+    else 
+        haml :results
+    end
 end 
 
 def https_get_request(url)
