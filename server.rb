@@ -1,9 +1,11 @@
 require 'sinatra'
+require 'sinatra/base'
 require 'net/http'
 require 'uri'
 require 'haml'
 require 'json'
 
+env = ENV['RACK_ENV'] || 'development'
 get '/' do 
     haml :index
 end
@@ -33,3 +35,4 @@ end
 def get_languages(url)
 
 end
+
