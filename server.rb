@@ -24,17 +24,18 @@ def https_get_request(url)
     url = URI.parse(url)
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = true
+    get_json(url, http)
+end
+
+def get_json(url, http)
     req = Net::HTTP::Get.new(url)
     res = http.request(req)
     json = JSON.parse(res.body)
 end
 
-def get_languages(user_repos)
-    languages_array = Array.new
-    user_repos.each do |repo|
-        languages_array << repo["language"] unless repo["language"] == nil
-    end
-    languages_array
+def guess(username)
+    languages_array = look_up_languages(username)
+    guess_favourite(languages_array)
 end
 
 def look_up_languages(username)
@@ -43,13 +44,15 @@ def look_up_languages(username)
     get_languages(user_repos)
 end
 
-def guess_favourite(languages_array)
-    languages_array.max_by {|language| languages_array.count(language)}
+def get_languages(user_repos)
+    languages_array = Array.new
+    user_repos.each do |repo|
+        languages_array << repo["language"] if repo["language"]
+    end
+    languages_array
 end
 
-def guess(username)
-    languages_array = look_up_languages(username)
-    puts languages_array.inspect
-    guess_favourite(languages_array)
+def guess_favourite(languages_array)
+    languages_array.max_by {|language| languages_array.count(language)}
 end
 
